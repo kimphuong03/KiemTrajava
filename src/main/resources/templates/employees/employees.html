@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Nhân Viên</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Crimson Pro', serif;
+            margin: 20px;
+            background: url('https://www.transparenttextures.com/patterns/light-paper-fibers.png');
+            color: #2c3e50;
+            background-color: #fdf6e3;
+        }
+
+        h2 {
+            color: #ff6f61;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            border: 2px solid #ff6f61;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        th {
+            background-color: #ffcccb;
+            color: #fff;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        td {
+            background-color: #fff;
+            color: #2c3e50;
+        }
+
+        a {
+            text-decoration: none;
+            padding: 5px 10px;
+            background-color: #ff6f61;
+            color: #fff;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            font-size: 14px;
+        }
+
+        a:hover {
+            background-color: #ff8267;
+        }
+
+        .edit-action {
+            margin-right: 5px;
+        }
+
+        .delete-action {
+            margin-left: 5px;
+        }
+
+        .gender-icon {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+            border-radius: 50%;
+            border: 2px solid #ff6f61;
+        }
+
+        .pagination {
+            margin-top: 20px;
+        }
+
+        .pagination .page-item {
+            margin: 0 5px;
+        }
+
+        .pagination .page-link {
+            color: #ff6f61;
+        }
+
+        .pagination .page-link:hover {
+            background-color: #ff8267;
+            color: #fff;
+        }
+
+        .pagination .active .page-link {
+            background-color: #ff6f61;
+            border-color: #ff6f61;
+            color: #fff;
+        }
+
+        .pagination .disabled .page-link {
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Danh Sách Nhân Viên - 2180607909_Kiều Thị Kim Phương</h2>
+    <a class="mb-3" th:href="@{/employees/add}">Thêm Nhân Viên</a>
+    <a th:href="@{/departments}">Thêm Phòng Ban</a>
+    <table class="table table-striped">
+        <thead class="thead-light">
+        <tr>
+            <th>Mã Nhân Viên</th>
+            <th>Tên Nhân Viên</th>
+            <th>Phái</th>
+            <th>Nơi Sinh</th>
+            <th>Lương</th>
+            <th>Phòng Ban</th>
+            <th>Hành Động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${employees}">
+            <td th:text="${employee.maNv}">Mã Nhân Viên</td>
+            <td th:text="${employee.tenNv}">Tên Nhân Viên</td>
+            <td>
+                <span th:text="${employee.phai}">
+                    <img th:if="${employee.phai == 'Nam'}" src="https://th.bing.com/th/id/OIP.x07I04g5ZwPvXrpCtCWV5gAAAA?rs=1&pid=ImgDetMain" alt="Nam" class="gender-icon">
+                    <img th:if="${employee.phai == 'Nữ'}" src="https://cdn-common.skima.jp/item/313/076/313076/showcase-29f51ecbc5f5a16221afd728f53b636e-20200301105709.jpeg" alt="Nữ" class="gender-icon">
+                </span>
+            </td>
+            <td th:text="${employee.noiSinh}">Nơi Sinh</td>
+            <td th:text="${employee.luong}">Lương</td>
+            <td>
+                <span th:if="${employee.department != null}" th:text="${employee.department.departmentName}">Phòng Ban</span>
+                <span th:if="${employee.department == null}">Không có phòng ban</span>
+            </td>
+            <td>
+                <a th:href="@{/employees/edit/{id}(id=${employee.maNv})}">Sửa</a>
+                <a th:href="@{/employees/delete/{id}(id=${employee.maNv})}">Xóa</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="pagination">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${currentPage == 0} ? disabled">
+                <a class="page-link" th:href="@{/employees}">Đầu</a>
+            </li>
+            <li class="page-item" th:each="page : ${#numbers.sequence(1, totalPages)}" th:classappend="${page == currentPage + 1} ? active">
+                <a class="page-link" th:href="@{/employees(page=${page - 1})}" th:text="${page}">1</a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? disabled">
+                <a class="page-link" th:href="@{/employees(page=${totalPages - 1})}">Cuối</a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

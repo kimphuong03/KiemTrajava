@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ứng Dụng Quản Lý Nhân Viên</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+</head>
+<body>
+<th:block th:replace="fragments/header :: header"></th:block>
+
+<div class="container">
+    <!-- Nội dung trang -->
+    <div th:include="this :: content"></div>
+</div>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+</body>
+</html>

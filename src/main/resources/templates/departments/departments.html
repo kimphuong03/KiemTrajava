@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Phòng Ban</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Crimson Pro', serif;
+            background: url('https://www.transparenttextures.com/patterns/light-paper-fibers.png');
+            background-color: #fdf6e3; /* Màu nền nhẹ nhàng */
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            color: #ff6f61; /* Màu chữ đậm */
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff6f61;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+        }
+        a:hover {
+            background-color: #ff8267;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #ffcccb;
+            color: #333;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        td {
+            background-color: #fff;
+            color: #333;
+        }
+        tr:nth-child(even) td {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Danh Sách Phòng Ban</h2>
+    <a th:href="@{/departments/add}">Thêm Phòng Ban</a>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên Phòng Ban</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="department : ${departments}">
+            <td th:text="${department.id}">ID</td>
+            <td th:text="${department.departmentName}">Tên Phòng Ban</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

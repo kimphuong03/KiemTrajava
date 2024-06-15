@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thêm Nhân Viên</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Crimson Pro', serif;
+            background-color: #fdf6e3;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            background-color: #f5f5f5;
+        }
+
+        button[type="submit"] {
+            background-color: #8fb9a8;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #709e88;
+        }
+
+        .gender-image {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .form-group img {
+            max-width: 20px;
+            max-height: 20px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Thêm Nhân Viên</h2>
+    <form th:action="@{/employees}" th:object="${employee}" method="post">
+        <div class="form-group">
+            <label for="maNv">Mã NV:</label>
+            <input type="text" th:field="*{maNv}" class="form-control" id="maNv"/>
+        </div>
+        <div class="form-group">
+            <label for="tenNv">Tên NV:</label>
+            <input type="text" th:field="*{tenNv}" class="form-control" id="tenNv"/>
+        </div>
+        <div class="form-group">
+            <label for="phai">Phái:</label>
+            <input type="text" th:field="*{phai}" class="form-control" id="phai"/>
+            <span class="gender-image"></span>
+        </div>
+        <div class="form-group">
+            <label for="noiSinh">Nơi Sinh:</label>
+            <input type="text" th:field="*{noiSinh}" class="form-control" id="noiSinh"/>
+        </div>
+        <div class="form-group">
+            <label for="luong">Lương:</label>
+            <input type="text" th:field="*{luong}" class="form-control" id="luong"/>
+        </div>
+        <div class="form-group">
+            <label for="department">Phòng Ban:</label>
+            <select th:field="*{department.id}" class="form-control" id="department">
+                <option th:each="department : ${departments}"
+                        th:value="${department.id}"
+                        th:text="${department.departmentName}">Phòng Ban
+                </option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Lưu</button>
+    </form>
+</div>
+
+<script th:inline="javascript">
+    /* Xử lý hiển thị hình ảnh thay cho giới tính */
+    var phaiInput = document.getElementById("phai");
+    var phaiSpan = document.querySelector(".gender-image");
+
+    phaiInput.addEventListener('input', function() {
+        var phaiValue = phaiInput.value.trim().toLowerCase();
+        var imageElement = document.createElement("img");
+
+        if (phaiValue === "nam") {
+            imageElement.src = "/static/images/man.jpg";
+            imageElement.alt = "Nam";
+        } else if (phaiValue === "nữ" || phaiValue === "nu") {
+            imageElement.src = "/static/images/women.jpg";
+            imageElement.alt = "Nữ";
+        } else {
+            phaiSpan.innerHTML = "";
+            return;
+        }
+
+        imageElement.style.width = "20px";
+        imageElement.style.height = "20px";
+
+        phaiSpan.innerHTML = "";
+        phaiSpan.appendChild(imageElement);
+    });
+</script>
+
+</body>
+</html>

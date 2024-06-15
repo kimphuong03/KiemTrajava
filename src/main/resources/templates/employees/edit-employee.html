@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sửa Nhân Viên</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Crimson Pro', serif;
+            background: url('https://www.transparenttextures.com/patterns/light-paper-fibers.png');
+            background-color: #fdf6e3; /* Màu nền nhẹ nhàng */
+            padding: 20px;
+        }
+        h2 {
+            color: #ff6f61; /* Màu chữ đậm */
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: #fff; /* Nền form trắng */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+            max-width: 600px;
+            margin: auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666; /* Màu chữ xám */
+            font-size: 16px;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc; /* Viền nhẹ */
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        button[type="submit"] {
+            background-color: #ff6f61; /* Màu nút lưu */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button[type="submit"]:hover {
+            background-color: #ff8267; /* Màu nút lưu khi di chuột qua */
+        }
+    </style>
+</head>
+<body>
+<h2>Sửa Nhân Viên</h2>
+<form id="editEmployeeForm" th:action="@{/employees/edit/{id}(id=${employee.maNv})}" th:object="${employee}" method="post">
+    <input type="hidden" th:field="*{maNv}" th:if="${employee != null}"/>
+    <label>Tên NV:</label>
+    <input type="text" th:field="*{tenNv}" th:if="${employee != null}"/><br/>
+    <label>Phái:</label>
+    <input type="text" th:field="*{phai}" th:if="${employee != null}"/><br/>
+    <label>Nơi Sinh:</label>
+    <input type="text" th:field="*{noiSinh}" th:if="${employee != null}"/><br/>
+    <label>Lương:</label>
+    <input type="text" th:field="*{luong}" th:if="${employee != null}"/><br/>
+    <label>Phòng Ban:</label>
+    <select th:field="*{department.id}" th:if="${employee != null}">
+        <option th:each="department : ${departments}"
+                th:value="${department.id}"
+                th:text="${department.departmentName}">Phòng Ban</option>
+    </select><br/>
+    <button type="submit" th:if="${employee != null}">Lưu</button>
+</form>
+</body>
+</html>

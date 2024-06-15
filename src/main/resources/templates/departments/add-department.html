@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Phòng Ban</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5; /* Màu nền nhẹ nhàng */
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            color: #ff6f61; /* Màu chữ đậm */
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        form {
+            background-color: #fff; /* Nền form trắng */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        label {
+            font-weight: bold;
+            color: #555; /* Màu chữ xám */
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            width: calc(100% - 12px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd; /* Viền nhẹ */
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button[type="submit"] {
+            background-color: #ff6f61; /* Màu nút lưu */
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #ff8267; /* Màu nút lưu khi di chuột qua */
+        }
+    </style>
+</head>
+<body>
+<h2>Thêm Phòng Ban</h2>
+<form th:action="@{/departments}" th:object="${department}" method="post">
+    <label>Mã Phòng Ban:</label>
+    <input type="text" th:field="*{departmentId}"/><br/>
+    <label>Tên Phòng Ban:</label>
+    <input type="text" th:field="*{departmentName}"/><br/>
+    <button type="submit">Lưu</button>
+</form>
+</body>
+</html>
